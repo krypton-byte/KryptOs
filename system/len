@@ -1,0 +1,10 @@
+#!/usr/bin/python2
+import json,sys,requests,urllib
+a=requests.get('https://api.github.com/search/repositories?q='+urllib.quote(sys.argv[1])+'+language:'+urllib.quote(sys.argv[2])+'&sort=stars&order=desc').text
+b=json.loads(a)
+n=0
+while n<=29:
+	sys.stdout.write(' {"a":"%s",' % b['items'][n]['owner']['login']+'"r":"%s"} kry\n' % b['items'][n]['name'])
+	sys.stdout.flush()
+	n+=1
+

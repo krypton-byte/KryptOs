@@ -1,0 +1,66 @@
+#!/data/data/com.termux/files/usr/bin/sh
+#       AUTHOR KRYPTON
+#	NO WA : 085872859859
+#	SELAMAT MENCOBA
+#please jgn recode atau menambahkan author
+#ini gratis tapi jgn di recode
+#USAHA TIDAK MENGHIANATI HASILL
+#WoW
+B='\033[34;1m'
+G='\033[32;1m'
+P='\033[35;1m'
+C='\033[36;1m'
+R='\033[31;1m'
+D='\033[37;1m'
+Y='\033[33;1m'
+cloner(){
+	auth=$1
+	repo=$2
+	#budayakan menulis program sesuai aturan
+	if [ "$(curl -s https://codeload.github.com/$auth/$repo/zip/master)" = '404: Not Found' ]
+	then
+		echo "\t${R}[${Y}!${R}]${B} file tidak di temukan atau mungkin telah di hapus$D"
+	elif [ "$(curl -s https://codeload.github.com -L  -I | grep -ac 'HTTP.*200')" = "0" ]
+	then
+		echo "\t${R}[${Y}*${R}]${B} data seluler anda sedang tidak aktif$D"
+	elif [ "$(curl -s https://codeload.github.com/$auth/$repo/zip/master -L  -I|grep -ac 'HTTP.*200')" = 1 ]
+	then
+		echo -n "\t${R}[${Y}*${R}]${B} file ......."
+		echo "  ${G}ditemukan"
+		echo -n "\t${R}[${Y}!${R}]${B} downloading .......$D"
+		curl -so $2-master.zip https://codeload.github.com/$auth/$repo/zip/master >/dev/null 2>&1
+		echo  " ${G}sukses$D"
+		echo -n "\t${R}[${Y}!${R}]${B} extracting ......."
+		unzip -o $2-master.zip >/dev/null 2>&1
+		echo " ${G}sukses$D"
+		echo -n "\t${R}[${Y}*${R}]${B} hapus cache ......."
+		rm $2-master.zip >/dev/null 2>&1
+		echo " ${G}sukses$D"
+		mv -f $2-master $2 >/dev/null 2>&1
+		echo "\t${R}[${Y}*${R}]${B} sukses$D"
+	else
+		echo "${R}[${Y}*${R}]${B} kesalahan tidak terdeteksi$D"
+	fi
+}
+pembuat(){
+	auth=$1
+	repo=$2
+	case $auth in
+		'')echo '$'"${G}clone ${B}<nama si pembuat> ${Y}<repository>$D"
+	;;
+		*)reposit $auth $repo
+	;;
+esac
+}
+reposit(){
+	auth=$1
+	repo=$2
+	case $repo in
+		'')echo '$'"${G}clone ${B}<nama si pembuat> ${Y}<repository>$D"
+	;;
+		*)cloner $auth $repo
+	;;
+	esac
+}
+pembuat $@
+
